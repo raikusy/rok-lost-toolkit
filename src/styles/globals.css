@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Source Sans Pro";
+  @apply font-body;
 }
 
 a {
@@ -12,4 +12,8 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+p {
+  @apply font-body !important;
 }

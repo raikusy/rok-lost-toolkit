@@ -331,6 +331,7 @@ const RichTextEditor = () => {
               placeholder="Enter some rich text…"
               spellCheck
               autoFocus
+              className="font-body"
               onKeyDown={(event) => {
                 for (const hotkey in HOTKEYS) {
                   if (isHotkey(hotkey)(event)) {
@@ -347,7 +348,7 @@ const RichTextEditor = () => {
       <Modal width="80vw" height="70vh" {...bindings}>
         <Modal.Title>Mail Code</Modal.Title>
         <Modal.Content>
-          <pre style={{ height: "100%" }}>
+          <pre style={{ height: "100%" }} className="font-mono">
             <code>{value?.map((v) => serialize(v))?.join("")}</code>
           </pre>
         </Modal.Content>

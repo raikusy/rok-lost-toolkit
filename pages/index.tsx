@@ -8,6 +8,10 @@ const Home: NextPage = () => {
     <Layout>
       <Head>
         <title>Rise of Kingdom - Lost Toolkit</title>
+        <meta
+          name="description"
+          content="Rise of Kingdoms - A tool to write mails with text styles, colors in a easy rich text editor and get the HTML code for it."
+        />
       </Head>
       <RichTextEditor />
     </Layout>
