@@ -1,0 +1,4 @@
+.root {
+  background-image: url("/mail_bg.png");
+  @apply w-screen h-screen bg-contain bg-no-repeat;
+}
