@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { Page } from "@geist-ui/react";
 import Image from "next/image";
-import { Twitter, Youtube } from "@geist-ui/react-icons";
 
 const Layout: NextPage = ({ children }) => {
   return (
