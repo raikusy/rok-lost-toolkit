@@ -25,10 +25,7 @@ const Layout: NextPage = ({ children }) => {
       <Page.Content className="min-h-full overflow-hidden p-4 my-8">
         {children}
       </Page.Content>
-      <Page.Footer
-        style={{ position: "relative" }}
-        className="text-center p-4 overflow-hidden"
-      >
+      <Page.Footer style={{ position: "relative", textAlign: "center" }}>
         <a
           href="https://www.buymeacoffee.com/raiku"
           target="_blank"
