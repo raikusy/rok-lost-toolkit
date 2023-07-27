@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "@stitches/react";
 import { violet, blackA, mauve, orange } from "@radix-ui/colors";
 import {
   FontBoldIcon,
   FontItalicIcon,
-  HeadingIcon,
   FontSizeIcon,
 } from "@radix-ui/react-icons";
 import * as ToolbarPrimitive from "@radix-ui/react-toolbar";
 import ColorPicker from "components/editor/ColorPicker";
 import { useSlate } from "slate-react";
-import { Editor, Transforms, Text, Element as SlateElement, Node } from "slate";
-import { Popover, Slider, useClipboard, useToasts } from "@geist-ui/react";
+import { Editor, Transforms, Text, Node } from "slate";
+import { Popover, Slider } from "@geist-ui/react";
+import { Twitter, Youtube } from "@geist-ui/react-icons";
 
 const StyledToolbar = styled(ToolbarPrimitive.Root, {
   display: "flex",
@@ -118,7 +118,7 @@ const EditorToolbar = ({ showCode, copyCode }) => {
 
   const textStyles = ["bold", "italic"];
 
-  const handleColorChange = (color) => {
+  const handleColorChange = (color: string) => {
     const { selection } = editor;
     if (!selection) return false;
     Transforms.setNodes(
@@ -140,7 +140,7 @@ const EditorToolbar = ({ showCode, copyCode }) => {
       Editor.addMark(editor, s, true);
     });
   };
-  const handleFontSize = (size) => {
+  const handleFontSize = (size: number) => {
     const { selection } = editor;
     if (!selection) return false;
 
@@ -222,6 +222,22 @@ const EditorToolbar = ({ showCode, copyCode }) => {
           <FontSizeIcon />
         </ToolbarButton>
       </Popover>
+
+      <div className="w-full flex gap-8 justify-center align-middle items-center">
+        {/* Twitter icon */}
+        <a href="https://twitter.com/raikusy" target="_blank" rel="noreferrer">
+          <Twitter color="#00acee" size={30} />
+        </a>
+
+        {/* YouTube icon */}
+        <a
+          href="https://www.youtube.com/@raikugg"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Youtube size={30} color="#c4302b" />
+        </a>
+      </div>
 
       <ToolbarButton onClick={copyCode} css={{ marginLeft: "auto" }}>
         Copy Mail Code

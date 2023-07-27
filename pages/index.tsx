@@ -7,10 +7,10 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Head>
-        <title>Rise of Kingdom - Lost Toolkit</title>
+        <title>Fancy Mail Tool ~ Rise of Kingdoms</title>
         <meta
           name="description"
-          content="Rise of Kingdoms - A tool to write mails with text styles, colors in a easy rich text editor and get the HTML code for it."
+          content="Fancy Mail Tool ~ Rise of Kingdoms | Make Fancy Mails with ease for Event Plans, Kingdom Announcments, WAR instructions!"
         />
       </Head>
       <RichTextEditor />

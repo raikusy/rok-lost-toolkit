@@ -3,6 +3,8 @@ body {
   padding: 0;
   margin: 0;
   @apply font-body;
+  background-image: url("/beijing.png");
+  background-size: cover;
 }
 
 a {
@@ -16,4 +18,9 @@ a {
 
 p {
   @apply font-body !important;
+}
+
+.mail-bg {
+  background-image: url("/mail_bg.png");
+  background-size: cover;
 }

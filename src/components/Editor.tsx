@@ -1,22 +1,17 @@
 import React, { useCallback, useMemo, useState } from "react";
 import isHotkey from "is-hotkey";
-import { Editable, withReact, useSlate, Slate, ReactEditor } from "slate-react";
-import {
-  Editor,
-  Transforms,
-  createEditor,
-  Descendant,
-  Element as SlateElement,
-  Node,
-  BaseEditor,
-} from "slate";
+import { Editable, withReact, Slate, ReactEditor } from "slate-react";
+import { Editor, createEditor, Descendant, BaseEditor } from "slate";
 import { withHistory } from "slate-history";
-import escapeHtml from "escape-html";
 import { Text } from "slate";
-
-import { Button, Icon, Toolbar } from "./Common";
 import EditorToolbar from "components/editor/Toolbar";
-import { Modal, useClipboard, useModal, useToasts } from "@geist-ui/react";
+import {
+  Modal,
+  Note,
+  useClipboard,
+  useModal,
+  useToasts,
+} from "@geist-ui/react";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -38,6 +33,7 @@ type CustomText = {
   size?: number;
 };
 declare module "slate" {
+  // eslint-disable-next-line no-unused-vars
   interface CustomTypes {
     Editor: BaseEditor & ReactEditor;
     Element: CustomElement;
@@ -58,82 +54,6 @@ const toggleMark = (editor, format) => {
   } else {
     Editor.addMark(editor, format, true);
   }
-};
-
-const isBlockActive = (editor, format) => {
-  const { selection } = editor;
-  if (!selection) return false;
-
-  const [match] = Editor.nodes(editor, {
-    at: Editor.unhangRange(editor, selection),
-    match: (n) =>
-      !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === format,
-  });
-
-  return !!match;
-};
-
-const LIST_TYPES = ["numbered-list", "bulleted-list"];
-
-const toggleBlock = (editor, format) => {
-  const isActive = isBlockActive(editor, format);
-  const isList = LIST_TYPES.includes(format);
-
-  Transforms.unwrapNodes(editor, {
-    match: (n) =>
-      !Editor.isEditor(n) &&
-      SlateElement.isElement(n) &&
-      LIST_TYPES.includes(n.type),
-    split: true,
-  });
-  const newProperties = {
-    type: isActive ? "paragraph" : isList ? "list-item" : format,
-  } as Partial<Node>;
-  Transforms.setNodes(editor, newProperties);
-
-  if (!isActive && isList) {
-    const block = { type: format, children: [] };
-    Transforms.wrapNodes(editor, block);
-  }
-};
-
-const ColorPicker = () => {
-  const [showPicker, setShowPicker] = useState(false);
-  const editor = useSlate();
-
-  const [color, setColor] = useState("#000");
-  const pickColor = (color) => {
-    const { selection } = editor;
-    if (!selection) return false;
-    Transforms.setNodes(
-      editor,
-      { color: color.hex },
-      // Apply it to text nodes, and split the text node up if the
-      // selection is overlapping only part of it.
-      { match: (n) => Text.isText(n), split: true }
-    );
-    setColor(color.hex);
-    setShowPicker(false);
-  };
-
-  return (
-    <>
-      <Button
-        active={showPicker}
-        onMouseDown={(event) => {
-          event.preventDefault();
-          setShowPicker(true);
-        }}
-      >
-        <Icon>palette</Icon>
-      </Button>
-      {showPicker && (
-        <div style={{ position: "absolute", zIndex: 2 }}>
-          <div style={{ position: "fixed", top: 20 }}></div>
-        </div>
-      )}
-    </>
-  );
 };
 
 const Element = ({ attributes, children, element }) => {
@@ -172,50 +92,27 @@ const Leaf = ({ attributes, children, leaf }) => {
   return <span {...attributes}>{children}</span>;
 };
 
-const BlockButton = ({ format, icon }) => {
-  const editor = useSlate();
-  return (
-    <Button
-      active={isBlockActive(editor, format)}
-      onMouseDown={(event) => {
-        event.preventDefault();
-        toggleBlock(editor, format);
-      }}
-    >
-      <Icon>{icon}</Icon>
-    </Button>
-  );
-};
-
-const MarkButton = ({ format, icon }) => {
-  const editor = useSlate();
-
-  return (
-    <Button
-      active={isMarkActive(editor, format)}
-      onMouseDown={(event) => {
-        event.preventDefault();
-        toggleMark(editor, format);
-      }}
-    >
-      <Icon>{icon}</Icon>
-    </Button>
-  );
-};
-
 const initialValue = [
   {
     type: "paragraph",
 
     children: [
       {
-        text: "Hello, ",
+        text: "          Hello, ",
+        bold: true,
         size: 40,
         color: "#0693e3",
       },
       {
-        text: "Rise of Kingdom!",
+        text: "Mighty Governors of ",
         size: 40,
+        bold: true,
+        color: "#9900ef",
+      },
+      {
+        text: "Rise of Kingdoms!",
+        bold: true,
+        size: 48,
         color: "#ff6900",
       },
     ],
@@ -227,21 +124,21 @@ const initialValue = [
         text: "You can write ",
       },
       {
-        text: "bold",
+        text: "BOLD",
         bold: true,
       },
       {
         text: " and ",
       },
       {
-        text: "italic",
+        text: "ITALIC",
         italic: true,
       },
       {
         text: " also ",
       },
       {
-        text: "colorful ",
+        text: "COLORFUL ",
         color: "#eb144c",
       },
       {
@@ -249,10 +146,14 @@ const initialValue = [
       },
       {
         text: "alliance",
+        bold: true,
         color: "#0693e3",
       },
       {
-        text: " mail easily using this tool!",
+        text: " mail for your next Alliance Event update or Kingdom Announcement or War strategy changes.",
+      },
+      {
+        text: "Now you can send fancy colorful creative mails to your Kingdom and standout from the crowd!",
       },
     ],
   },
@@ -260,7 +161,10 @@ const initialValue = [
     type: "paragraph",
     children: [
       {
-        text: "Created by:",
+        text: "SHARE THIS WITH PLAYERS AROUND YOU 🫰 I APPRECIATE THE SUPPORT THANKS!",
+        bold: true,
+        size: 18,
+        color: "#000",
       },
     ],
   },
@@ -268,33 +172,55 @@ const initialValue = [
     type: "paragraph",
     children: [
       {
-        text: "Raiku - KD#2417",
-        size: 30,
+        text: "                                        Developed by:",
+      },
+    ],
+  },
+  {
+    type: "paragraph",
+    children: [
+      {
+        text: "MD RAKIBUL HASAN 🫰 RaikuGG",
+        size: 28,
+        bold: true,
         color: "#9900ef",
+      },
+    ],
+  },
+  {
+    type: "paragraph",
+    children: [
+      {
+        text: "                         🇧🇩 Software Developer 🇸🇦",
+        size: 20,
       },
     ],
   },
 ] as Descendant[];
 
-const serialize = (node) => {
+const serialize = (node: any) => {
   if (Text.isText(node)) {
-    let string = escapeHtml(node.text);
-    if (node.bold) {
-      string = `<b>${string}</b>`;
+    if (node.text?.trim()) {
+      let string: string = node.text;
+      if (node.bold) {
+        string = `<b>${string}</b>`;
+      }
+      if (node.italic) {
+        string = `<i>${string}</i>`;
+      }
+      if (node.color) {
+        string = `<color=${node.color}>${string}</color>`;
+      }
+      if (node.size && node.size > 16) {
+        string = `<size=${node.size}>${string}</size>`;
+      }
+      return `${string}`;
     }
-    if (node.italic) {
-      string = `<i>${string}</i>`;
-    }
-    if (node.color) {
-      string = `<color=${node.color}>${string}</color>`;
-    }
-    if (node.size && node.size > 16) {
-      string = `<size=${node.size}>${string}</size>`;
-    }
-    return `${string}`;
   }
 
-  const children = node.children.map((n) => serialize(n)).join("");
+  const children = node?.children
+    ? node?.children?.map((n: any) => serialize(n)).join("")
+    : "";
   return `${children}\n`;
 };
 
@@ -322,9 +248,9 @@ const RichTextEditor = () => {
         value={value}
         onChange={(value) => setValue(value)}
       >
-        <div className="min-h-full bg-white rounded shadow-lg">
+        <div className="min-h-full bg-white rounded shadow-lg mail-bg">
           <EditorToolbar showCode={showCode} copyCode={copyCode} />
-          <div className="h-full p-10 shadow-sm">
+          <div className="h-full p-8 shadow-sm">
             <Editable
               renderElement={renderElement}
               renderLeaf={renderLeaf}
@@ -340,6 +266,15 @@ const RichTextEditor = () => {
                     toggleMark(editor, mark);
                   }
                 }
+                // console.log(event.code);
+                // Reset the formatting when 'Enter' is pressed
+                if (event.code === "Enter") {
+                  // event.preventDefault();
+                  Editor.removeMark(editor, "bold");
+                  Editor.removeMark(editor, "italic");
+                  Editor.removeMark(editor, "size");
+                  Editor.removeMark(editor, "color");
+                }
               }}
             />
           </div>
@@ -351,6 +286,9 @@ const RichTextEditor = () => {
           <pre style={{ height: "100%" }} className="font-mono">
             <code>{value?.map((v) => serialize(v))?.join("")}</code>
           </pre>
+          <Note type="success">
+            Copy this code and paste it in game mail editor and send.
+          </Note>
         </Modal.Content>
 
         <Modal.Action passive onClick={() => setVisible(false)}>
