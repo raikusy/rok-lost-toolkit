@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import Script from "next/script";
 import { IdProvider } from "@radix-ui/react-id";
 import { GeistProvider, CssBaseline } from "@geist-ui/react";
+import { Analytics } from "@vercel/analytics/react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -27,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />;
         </GeistProvider>
       </IdProvider>
+      <Analytics />
     </>
   );
 }
