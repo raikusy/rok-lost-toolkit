@@ -20,6 +20,7 @@ import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { toggleFancyTextPublic } from "@/server/actions/fancy-text.action";
 import DeleteDialog from "./toolbar/delete-dialog";
+import DuplicateDialog from "./toolbar/duplicate-dialog";
 
 interface EditorProps {
   mode: "create" | "edit" | "view";
@@ -128,7 +129,7 @@ const Editor = ({
                     <Label htmlFor="isPublic">Make Public?</Label>
                   </div>
                   <Link href={PAGES.EDIT_TEMPLATE(template.id)}>
-                    <Button size="sm" variant="secondary">
+                    <Button size="sm" variant="default">
                       Edit
                     </Button>
                   </Link>
@@ -136,11 +137,7 @@ const Editor = ({
                 </>
               )}
 
-              {user && (
-                <Button size="sm" variant="secondary">
-                  Duplicate
-                </Button>
-              )}
+              {user && <DuplicateDialog template={template} />}
             </>
           )}
         </div>

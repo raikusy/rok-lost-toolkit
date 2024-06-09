@@ -171,7 +171,7 @@ const EditorToolbar = ({
       </ToggleGroup>
 
       <div className="flex flex-row flex-wrap items-center space-x-2">
-        <Button size="sm" onClick={handleCopy}>
+        <Button variant="outline" size="sm" onClick={handleCopy}>
           Click to copy
         </Button>
 

@@ -4,9 +4,8 @@ import { JSONContent } from "@tiptap/react";
 import { getCurrentUserSession } from "./auth.action";
 import { FancyTextService } from "../services/fancy-text.service";
 import { cacheData } from "@/lib/cache-data";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { KEY_CACHE } from "@/config/key-cache";
-import { PAGES } from "@/config/pages";
 
 export const createFancyText = async (input: {
   name: string;
@@ -81,7 +80,10 @@ export const duplicateFancyText = async (id: string) => {
   if (!user) {
     throw new Error("Unauthorized");
   }
-  return FancyTextService.duplicateFancyText(id, user.id);
+  const [duplicated] = await FancyTextService.duplicateFancyText(id, user.id);
+  revalidateTag(KEY_CACHE.FANCY_TEXT.GET_PUBLIC);
+  revalidateTag(KEY_CACHE.FANCY_TEXT.GET_MINE(user.id));
+  return duplicated;
 };
 
 export const deleteFancyText = async (id: string) => {
