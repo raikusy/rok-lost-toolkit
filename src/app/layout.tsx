@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { env } from "@/env.mjs";
@@ -44,7 +44,7 @@ export default function RootLayout({
         {children}
         <Toaster position="top-right" richColors />
       </body>
-      <GoogleTagManager gtmId={env.NEXT_PUBLIC_GA_ID} />
+      <GoogleAnalytics gaId={env.NEXT_PUBLIC_GA_ID} />
     </html>
   );
 }
