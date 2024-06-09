@@ -1,4 +1,5 @@
 import Pages from "@/components/client/pages";
+import SearchBox from "@/components/client/search";
 import { PAGES } from "@/config/pages";
 import { getPublicFancyTexts } from "@/server/actions/fancy-text.action";
 import { format } from "date-fns";
@@ -70,6 +71,9 @@ export default async function Home({
                 players
               </p>
             </div>
+          </div>
+          <div className="flex justify-center">
+            <SearchBox />
           </div>
           {templates?.data?.length ? (
             <>

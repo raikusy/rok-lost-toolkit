@@ -90,7 +90,7 @@ export const FancyTextService = {
 
     if (search) {
       where.push(
-        sql`to_tsvector('english', ${fancyTextTable.name}) @@ to_tsquery('english', ${search})`
+        sql`to_tsvector('english', ${fancyTextTable.name}) @@ plainto_tsquery('english', ${search})`
       );
     }
     const [result, count] = await Promise.all([
@@ -124,7 +124,7 @@ export const FancyTextService = {
 
     if (search) {
       where.push(
-        sql`to_tsvector('english', ${fancyTextTable.name}) @@ to_tsquery('english', ${search})`
+        sql`to_tsvector('english', ${fancyTextTable.name}) @@ plainto_tsquery('english', ${search})`
       );
     }
     const [result, count] = await Promise.all([

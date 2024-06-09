@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { PAGES } from "@/config/pages";
 import { nameToAvatar } from "@/lib/utils";
 import Pages from "@/components/client/pages";
+import SearchBox from "@/components/client/search";
 
 export default async function Page({
   searchParams,
@@ -36,7 +37,10 @@ export default async function Page({
       </div>
 
       <div className="flex flex-col gap-4 my-8">
-        <h3 className="text-center text-xl font-semibold">My Mails</h3>
+        <h3 className="text-center text-xl font-semibold">My Mail Templates</h3>
+        <div className="flex justify-center">
+          <SearchBox />
+        </div>
         {templates?.total ? (
           <>
             <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
