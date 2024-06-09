@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GoogleIcon } from "@/components/icons/google";
+import { PAGES } from "@/config/pages";
 
 export default function Page() {
   return (
@@ -38,6 +39,9 @@ export default function Page() {
             <GoogleIcon className="me-2" />
             Login with Google
           </Button>
+        </Link>
+        <Link href={PAGES.HOME}>
+          <Button className="w-full">Go back home</Button>
         </Link>
       </div>
       {/* <div className="mt-4 text-center text-sm">
