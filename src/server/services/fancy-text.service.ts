@@ -49,19 +49,21 @@ export const FancyTextService = {
     }
     return FancyTextService.createFancyText({
       userId: userId,
-      name: existing.name,
+      name: `${existing.name} copy`,
       content: existing.content,
       isPublic: existing.isPublic,
     });
   },
 
-  deleteFancyText: async (id: string) => {
-    return db
+  deleteFancyText: async (id: string, userId: string) => {
+    const deleted = await db
       .update(fancyTextTable)
       .set({ deletedAt: new Date() })
-      .where(eq(fancyTextTable.id, id))
+      .where(and(eq(fancyTextTable.id, id), eq(fancyTextTable.userId, userId)))
       .returning()
       .execute();
+
+    return deleted;
   },
 
   getFancyTextById: async (id: string) => {

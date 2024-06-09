@@ -19,6 +19,7 @@ import Link from "next/link";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { toggleFancyTextPublic } from "@/server/actions/fancy-text.action";
+import DeleteDialog from "./toolbar/delete-dialog";
 
 interface EditorProps {
   mode: "create" | "edit" | "view";
@@ -131,9 +132,7 @@ const Editor = ({
                       Edit
                     </Button>
                   </Link>
-                  <Button size="sm" variant="destructive">
-                    Delete
-                  </Button>
+                  <DeleteDialog template={template} />
                 </>
               )}
 

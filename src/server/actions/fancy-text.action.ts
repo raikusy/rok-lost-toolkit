@@ -89,7 +89,12 @@ export const deleteFancyText = async (id: string) => {
   if (!user) {
     throw new Error("Unauthorized");
   }
-  return FancyTextService.deleteFancyText(id);
+  const [deleted] = await FancyTextService.deleteFancyText(id, user.id);
+  revalidateTag(KEY_CACHE.FANCY_TEXT.GET_ONE(id));
+  revalidateTag(KEY_CACHE.FANCY_TEXT.GET_PUBLIC);
+  revalidateTag(KEY_CACHE.FANCY_TEXT.GET_MINE(user.id));
+
+  return deleted;
 };
 
 export const getFancyTextById = async (id: string) => {
