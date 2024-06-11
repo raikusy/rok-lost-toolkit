@@ -21,6 +21,8 @@ import { Label } from "./ui/label";
 import { toggleFancyTextPublic } from "@/server/actions/fancy-text.action";
 import DeleteDialog from "./toolbar/delete-dialog";
 import DuplicateDialog from "./toolbar/duplicate-dialog";
+import { FontSize } from "@/lib/font-size";
+import { Confetti } from "./magicui/confetti";
 
 interface EditorProps {
   mode: "create" | "edit" | "view";
@@ -40,9 +42,10 @@ const Editor = ({
   template,
 }: EditorProps) => {
   const [color, setColor] = useState("#000000");
+  const [fontSize, setFontSize] = useState([12]);
   const router = useRouter();
   const editor = useEditor({
-    extensions: [StarterKit, TextStyle, Color],
+    extensions: [StarterKit, TextStyle, Color, FontSize],
     content: content,
     editorProps: {
       attributes: {
@@ -54,6 +57,8 @@ const Editor = ({
     },
     onSelectionUpdate: ({ editor }) => {
       const c = editor.getAttributes("textStyle").color ?? "#000000";
+      const s = editor.getAttributes("textStyle").fontSize ?? "12px";
+      setFontSize([parseInt(s)]);
       setColor(c);
     },
   });
@@ -61,6 +66,7 @@ const Editor = ({
   const fancyCode = editor ? convertTiptapToXML(editor.getJSON()) : "";
 
   const handleCopy = async () => {
+    Confetti({});
     const code = editor ? convertTiptapToXML(editor.getJSON()) : "";
     // const code = editor ? JSON.stringify(editor.getJSON()) : "";
     const promise = navigator.clipboard.writeText(code);
@@ -107,9 +113,7 @@ const Editor = ({
               <CreateDialog editor={editor} />
             ) : (
               <Link href={PAGES.LOGIN}>
-                <Button size="sm" variant="secondary">
-                  Login to Save
-                </Button>
+                <Button>Login to Save</Button>
               </Link>
             ))}
 
@@ -150,11 +154,10 @@ const Editor = ({
           editor={editor}
           textColor={color}
           setTextColor={setColor}
+          fontSize={fontSize}
+          setFontSize={setFontSize}
           handleCopy={handleCopy}
           fancyCode={fancyCode}
-          user={user}
-          mode={mode}
-          template={template}
         />
         <div className="editor flex min-h-[300px] w-full bg-[#F1E3C3]">
           <EditorContent

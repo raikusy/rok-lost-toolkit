@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useState } from "react";
 import { Editor } from "@tiptap/react";
 import {
   Bold,
@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 
 import { ToggleGroup, Toolbar } from "@/components/toolbar";
+
+import { Slider } from "@/components/ui/slider";
 
 import { Toggle } from "@/components/ui/toggle";
 import { FormatType } from "./format-type";
@@ -32,24 +34,15 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { User } from "lucia";
-import CreateDialog from "./create-dialog";
-import UpdateDialog from "./update-dialog";
-import { toggleFancyTextPublic } from "@/server/actions/fancy-text.action";
-import { FancyText } from "@/db/schema";
-import Link from "next/link";
-import { PAGES } from "@/config/pages";
+import { Input } from "../ui/input";
+import FontsizeDropdown from "./fontsize-dropdown";
 
 interface EditorToolbarProps {
-  mode: "create" | "edit" | "view";
   editor: Editor;
   textColor: string;
   fancyCode: string;
-  user?: User | null;
-  template?: FancyText;
+  fontSize: number[];
+  setFontSize: (v: number[]) => void;
   setTextColor: (color: string) => void;
   handleCopy: () => Promise<void>;
 }
@@ -58,28 +51,19 @@ const EditorToolbar = ({
   editor,
   textColor,
   setTextColor,
+  fontSize,
+  setFontSize,
   handleCopy,
   fancyCode,
-  user,
-  mode,
-  template,
 }: EditorToolbarProps) => {
   const handleColorChange = (color: string) => {
     setTextColor(color);
     editor.chain().focus().setColor(color).run();
   };
 
-  const [isPending, startTransition] = useTransition();
-
-  const [isPublic, setIsPublic] = useState(template?.isPublic ?? false);
-
-  const handlePublicChange = async (isPublic: boolean) => {
-    startTransition(async () => {
-      if (template) {
-        await toggleFancyTextPublic(template.id, isPublic);
-        setIsPublic(isPublic);
-      }
-    });
+  const onFontSizeChange = (v: number[]) => {
+    setFontSize(v);
+    editor.chain().focus().setFontSize(`${fontSize[0]}px`).run();
   };
 
   return (
@@ -165,7 +149,12 @@ const EditorToolbar = ({
           <Redo className="h-4 w-4" />
         </Toggle>
 
-        <FormatType editor={editor} />
+        {/* <FormatType editor={editor} /> */}
+
+        <FontsizeDropdown
+          fontSize={fontSize[0]}
+          setFontsize={onFontSizeChange}
+        />
 
         <ColorPicker background={textColor} setBackground={handleColorChange} />
       </ToggleGroup>

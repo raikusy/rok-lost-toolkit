@@ -46,6 +46,9 @@ export function convertTiptapToXML(json: JSONContent) {
             if (mark.attrs && mark.attrs.color) {
               result = `<color=${mark.attrs.color}>${result}</color>`;
             }
+            if (mark.attrs && mark.attrs.fontSize) {
+              result = `<size=${mark.attrs.fontSize}>${result}</size>`;
+            }
             break;
           default:
             break;

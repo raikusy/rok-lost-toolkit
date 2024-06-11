@@ -1,14 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { Paintbrush } from "lucide-react";
+import { HexColorPicker } from "react-colorful";
 
 export function ColorPicker({
   background,
@@ -20,7 +20,6 @@ export function ColorPicker({
   className?: string;
 }) {
   const solids = [
-    "#FFFFFF", // White
     "#000000", // Black
     "#C62828", // Red 800
     "#AD1457", // Pink 800
@@ -33,19 +32,23 @@ export function ColorPicker({
     "#00695C", // Teal 800
     "#2E7D32", // Green 800
     "#558B2F", // Light Green 800
-    "#9E9D24", // Lime 800
     "#F9A825", // Yellow 800
     "#FF8F00", // Amber 800
     "#EF6C00", // Orange 800
     "#D84315", // Deep Orange 800
     "#4E342E", // Brown 800
-    "#424242", // Grey 800
-    "#37474F", // Blue Grey 800
+    "#F44336", // Red 500
+    "#E91E63", // Pink 500
+    "#9C27B0", // Purple 500
+    "#673AB7", // Deep Purple 500
+    "#2196F3", // Blue 500
+    "#00BCD4", // Cyan 500
+    "#009688", // Teal 500
   ];
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <Button
           variant={"outline"}
           className={cn(
@@ -68,9 +71,14 @@ export function ColorPicker({
             </div>
           </div>
         </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-64">
-        <div className="flex flex-wrap gap-2">
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-60 p-4 flex flex-col items-center">
+        <HexColorPicker
+          className="mb-4"
+          color={background}
+          onChange={setBackground}
+        />
+        <div className="flex flex-wrap gap-2 justify-between">
           {solids.map((s) => (
             <div
               key={s}
@@ -81,14 +89,19 @@ export function ColorPicker({
           ))}
         </div>
 
-        <Input
+        {/* <HexColorInput
+          color={background}
+          onChange={setBackground}
+          className="mt-4 h-8 p-2 w-full"
+        /> */}
+        {/* <Input
           id="custom"
           value={background}
           className="col-span-2 h-8 mt-4"
           onChange={(e) => setBackground(e.currentTarget.value)}
-        />
-      </PopoverContent>
-    </Popover>
+        /> */}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
