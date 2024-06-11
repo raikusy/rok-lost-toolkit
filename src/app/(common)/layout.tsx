@@ -45,6 +45,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
           <a
             className="text-md font-medium hover:underline underline-offset-4"
             href="https://patreon.com/raikusy"
+            target="_blank"
           >
             Support on Patreon
           </a>
