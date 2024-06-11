@@ -30,7 +30,7 @@ export default async function Home({
             />
             {/* <Logo className="h-48 w-48" /> */}
             <span className="sr-only">
-              Fancy Mail Text - Rise of Kingdom & Call of Dragons
+              Fancy Mail Text - Rise of Kingdoms & Call of Dragons
             </span>
           </Link>
           <div className="space-y-2">

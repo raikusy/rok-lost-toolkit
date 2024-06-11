@@ -8,9 +8,9 @@ import { env } from "@/env.mjs";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Fancy Mail Text - Rise of Kingdoms & Call of Dragons Tool",
+  title: "Fancy Mail Text - Rise of Kingdoms & Call of Dragons",
   description:
-    "Create beautiful Rise of Kingdoms & Call of Dragons event guides, KVK strategies, alliance and kingdom updates, MGE announcements with ease. Also browse hundreds of public mail templates created by other players.",
+    "Create beautiful Rise of Kingdoms & Call of Dragons mail for event guides, KVK strategies, alliance and kingdom updates, MGE announcements with ease. Create stylish Alliance Descriptions. Browse hundreds of public mail templates created by other players.",
 };
 
 export default function RootLayout({
