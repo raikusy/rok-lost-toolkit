@@ -8,7 +8,7 @@ import { env } from "@/env.mjs";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ROK Mail Art - Rise of Kingdoms & Call of Dragons Tool",
+  title: "Fancy Mail Text - Rise of Kingdoms & Call of Dragons Tool",
   description:
     "Create beautiful Rise of Kingdoms & Call of Dragons event guides, KVK strategies, alliance and kingdom updates, MGE announcements with ease. Also browse hundreds of public mail templates created by other players.",
 };

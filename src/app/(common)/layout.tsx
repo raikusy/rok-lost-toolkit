@@ -14,7 +14,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
           <Logo className="h-12 w-12" />
           <span className="sr-only">Full-stack Next.js Starter</span>
         </Link> */}
-        <nav className="mx-auto flex items-center space-x-4">
+        <nav className="mx-auto flex items-center space-x-6">
           <Link
             className="text-md font-medium hover:underline underline-offset-4"
             href="/"
@@ -44,9 +44,9 @@ export default async function Layout({ children }: { children: ReactNode }) {
           )}
           <a
             className="text-md font-medium hover:underline underline-offset-4"
-            href="mailto:ping@raikusy.dev"
+            href="https://patreon.com/raikusy"
           >
-            Contact Me
+            Support on Patreon
           </a>
           <a href="https://buymeacoffee.com/raiku" target="_blank">
             <Image

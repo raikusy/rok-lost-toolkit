@@ -26,25 +26,25 @@ export default async function Home({
               src="/logo_rok.png"
               width={384}
               height={173}
-              alt="Rok Mail Art - Rise of Kingdom & Call of Dragons"
+              alt="Fancy Mail Text - Rise of Kingdom & Call of Dragons"
             />
             {/* <Logo className="h-48 w-48" /> */}
             <span className="sr-only">
-              Rok Mail Art - Rise of Kingdom & Call of Dragons
+              Fancy Mail Text - Rise of Kingdom & Call of Dragons
             </span>
           </Link>
           <div className="space-y-2">
             <h1 className="my-4 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-              Rok Mail Art
+              Fancy Mail Text
             </h1>
             <h3 className="text-lg font-bold tracking-tighter sm:text-xl md:text-2xl lg:text-4xl">
-              Rise of Kingdom & Call of Dragons
+              Rise of Kingdoms & Call of Dragons
             </h3>
             <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-              Create beautiful Rise of Kingdoms & Call of Dragons event guides,
-              KVK strategies, alliance and kingdom updates, MGE announcements
-              with ease. Also browse hundreds of public mail templates created
-              by other players.
+              Create beautiful Rise of Kingdoms & Call of Dragons mail for event
+              guides, KVK strategies, alliance and kingdom updates, MGE
+              announcements with ease. Create stylish Alliance Descriptions.
+              Browse hundreds of public mail templates created by other players.
             </p>
           </div>
 
@@ -108,7 +108,7 @@ export default async function Home({
         <div className="container space-y-8 px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-4xl dark:bg-gray-800 mb-8">
+              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-2xl dark:bg-gray-800 mb-8">
                 Sponsors
               </div>
               <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
@@ -119,9 +119,9 @@ export default async function Home({
           <div className="space-x-4 flex justify-center">
             <a
               className="inline-flex h-12 items-center justify-center rounded-md bg-gray-900 px-6 py-4 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-              href="mailto:ping@raikusy.dev"
+              href="https://patreon.com/raikusy"
             >
-              Care to Sponsor?
+              Sponsor Me on Patreon
             </a>
             <a href="https://buymeacoffee.com/raiku" target="_blank">
               <Image
