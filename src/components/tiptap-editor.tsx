@@ -57,10 +57,12 @@ const Editor = ({
       setColor(c);
     },
   });
+  // const fancyCode = editor ? JSON.stringify(editor.getJSON(), null, 2) : "";
   const fancyCode = editor ? convertTiptapToXML(editor.getJSON()) : "";
 
   const handleCopy = async () => {
     const code = editor ? convertTiptapToXML(editor.getJSON()) : "";
+    // const code = editor ? JSON.stringify(editor.getJSON()) : "";
     const promise = navigator.clipboard.writeText(code);
     toast.promise(promise, {
       loading: "Loading...",

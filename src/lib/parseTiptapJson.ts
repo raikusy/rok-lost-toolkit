@@ -15,7 +15,17 @@ export function convertTiptapToXML(json: JSONContent) {
         return `${node?.content?.map(parseNode)?.join("")}`;
       case "text":
         return parseText(node);
-
+      case "orderedList":
+        return node.content
+          ?.map(
+            (item, index) =>
+              `${index + (node.attrs?.start || 1)}. ${parseNode(item)}`
+          )
+          ?.join("\n");
+      case "bulletList":
+        return node.content?.map((item) => `* ${parseNode(item)}`)?.join("\n");
+      case "listItem":
+        return node.content?.map(parseNode)?.join("");
       default:
         return "";
     }
