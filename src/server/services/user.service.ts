@@ -15,6 +15,8 @@ export const UserService = {
     return user;
   },
   getAllUsers: async () => {
-    return db.query.userTable.findMany();
+    return db.query.userTable.findMany({
+      orderBy: (users, { desc }) => [desc(users.createdAt)],
+    });
   },
 };

@@ -6,6 +6,7 @@ import { FancyTextService } from "../services/fancy-text.service";
 import { cacheData } from "@/lib/cache-data";
 import { revalidateTag } from "next/cache";
 import { KEY_CACHE } from "@/config/key-cache";
+import { ROLES } from "@/config/roles";
 
 export const createFancyText = async (input: {
   name: string;
@@ -122,3 +123,16 @@ export const getPublicFancyTexts = cacheData(
   FancyTextService.getPublicFancyTexts,
   [KEY_CACHE.FANCY_TEXT.GET_PUBLIC]
 );
+
+export const getAllFancyTexts = async (params: {
+  page?: number;
+  search?: string;
+}) => {
+  const { user } = await getCurrentUserSession();
+  if (!user || user.role !== ROLES.ADMIN) {
+    throw new Error("Unauthorized");
+  }
+  return cacheData(FancyTextService.getAllFancyTexts, [
+    KEY_CACHE.FANCY_TEXT.GET_ALL,
+  ])(params);
+};

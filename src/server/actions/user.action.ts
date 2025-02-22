@@ -13,5 +13,5 @@ export const createUser = async (input: UserCreateInput) => {
 };
 
 export const getAllUsers = async () => {
-  return cacheData(UserService.getAllUsers, [KEY_CACHE.USERS.GET_ALL]);
+  return cacheData(UserService.getAllUsers, [KEY_CACHE.USERS.GET_ALL])();
 };

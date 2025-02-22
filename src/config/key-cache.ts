@@ -1,10 +1,11 @@
 export const KEY_CACHE = {
   USERS: {
-    GET_ALL: "USERS_GET_ALL",
+    GET_ALL: "users:get-all",
   },
   FANCY_TEXT: {
-    GET_PUBLIC: "FANCY_TEXT_GET_PUBLIC",
-    GET_MINE: (id: string) => `FANCY_TEXT_GET_MINE_${id}`,
-    GET_ONE: (id: string) => `FANCY_TEXT_GET_ONE_${id}`,
+    GET_PUBLIC: "fancy-text:get-public",
+    GET_MINE: (id: string) => `fancy-text:get-mine:${id}`,
+    GET_ONE: (id: string) => `fancy-text:get-one:${id}`,
+    GET_ALL: "fancy-text:get-all",
   },
-};
+} as const;

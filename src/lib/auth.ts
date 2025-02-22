@@ -8,6 +8,7 @@ import { db } from "@/db/drizzle";
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { Session } from "lucia";
+import type { Role } from "@/config/roles";
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 
@@ -27,6 +28,7 @@ export const lucia = new Lucia(adapter, {
       name: attributes.name,
       image: attributes.image,
       googleId: attributes.googleId,
+      role: attributes.role,
     };
   },
 });
@@ -51,6 +53,7 @@ interface DatabaseUserAttributes {
   name: string;
   image: string;
   googleId: string;
+  role: Role;
 }
 
 export const validateRequest = cache(

@@ -3,7 +3,7 @@ import "server-only";
 import { db } from "@/db/drizzle";
 import { fancyTextTable } from "@/db/schema";
 import { JSONContent } from "@tiptap/react";
-import { and, countDistinct, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, countDistinct, desc, eq, isNull, sql, ilike } from "drizzle-orm";
 
 export interface FancyText {
   name: string;
@@ -147,6 +147,38 @@ export const FancyTextService = {
     return {
       data: result,
       total: count[0].count,
+    };
+  },
+
+  getAllFancyTexts: async (params: { page?: number; search?: string }) => {
+    const page = params.page || 1;
+    const limit = 12;
+    const offset = (page - 1) * limit;
+
+    const where = and(
+      isNull(fancyTextTable.deletedAt),
+      params.search
+        ? sql`to_tsvector('english', ${fancyTextTable.name}) @@ plainto_tsquery('english', ${params.search})`
+        : undefined
+    );
+
+    const count = await db.$count(fancyTextTable, where);
+
+    const data = await db.query.fancyTextTable.findMany({
+      where,
+      limit,
+      offset,
+      orderBy: [desc(fancyTextTable.createdAt)],
+      with: {
+        user: true,
+      },
+    });
+
+    return {
+      data,
+      total: Number(count),
+      page,
+      limit,
     };
   },
 };
