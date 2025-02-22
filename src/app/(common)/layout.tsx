@@ -63,7 +63,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
       <main className="container flex flex-col flex-1 h-full">{children}</main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          © 2024{" "}
+          © 2025{" "}
           <a
             className="hover:underline underline-offset-4"
             href="https://raikusy.dev/"
