@@ -38,12 +38,12 @@ export const fancyTextTable = pgTable(
       mode: "date",
     }),
   },
-  (table) => ({
-    titleSearchIndex: index("name_search_index").using(
+  (table) => [
+    index("name_search_index").using(
       "gin",
       sql`to_tsvector('english', ${table.name})`
     ),
-  })
+  ]
 );
 
 export const fancyTextRelations = relations(fancyTextTable, ({ one }) => ({

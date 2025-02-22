@@ -5,8 +5,6 @@ import { lucia, validateRequest } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export const emailLogin = () => {};
-
 export const getCurrentUserSession = async () => {
   const { user, session } = await validateRequest();
   return { user, session };

@@ -159,7 +159,10 @@ const Editor = ({
           handleCopy={handleCopy}
           fancyCode={fancyCode}
         />
-        <div className="editor flex min-h-[300px] w-full bg-[#F1E3C3]">
+        <div
+          id="rok-editor"
+          className="editor flex min-h-[300px] w-full bg-[#F1E3C3]"
+        >
           <EditorContent
             className="flex flex-1 flex-col w-full max-w-full"
             editor={editor}
