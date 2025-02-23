@@ -1,9 +1,5 @@
-import { Extension } from "@tiptap/core";
+import { Extension, type CommandProps } from "@tiptap/core";
 import "@tiptap/extension-text-style";
-
-export type FontSizeOptions = {
-  types: string[];
-};
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -11,7 +7,7 @@ declare module "@tiptap/core" {
       /**
        * Set the font size
        */
-      setFontSize: (fontSize: string) => ReturnType;
+      setFontSize: (size: string) => ReturnType;
       /**
        * Unset the font size
        */
@@ -19,6 +15,15 @@ declare module "@tiptap/core" {
     };
   }
 }
+
+export interface FontSizeOptions {
+  types: string[];
+}
+
+type FontSizeAttributes = {
+  [key: string]: any;
+  fontSize: string | null;
+};
 
 export const FontSize = Extension.create<FontSizeOptions>({
   name: "fontSize",
@@ -36,9 +41,9 @@ export const FontSize = Extension.create<FontSizeOptions>({
         attributes: {
           fontSize: {
             default: null,
-            parseHTML: (element) =>
-              element.style.fontSize.replace(/['"]+/g, ""),
-            renderHTML: (attributes) => {
+            parseHTML: (element: HTMLElement) =>
+              element.style.fontSize?.replace(/['"]+/g, ""),
+            renderHTML: (attributes: Record<string, any>) => {
               if (!attributes.fontSize) {
                 return {};
               }
@@ -56,15 +61,17 @@ export const FontSize = Extension.create<FontSizeOptions>({
   addCommands() {
     return {
       setFontSize:
-        (fontSize) =>
-        ({ chain }) => {
-          return chain().setMark("textStyle", { fontSize }).run();
-        },
+        (fontSize: string) =>
+        ({ chain }: CommandProps) =>
+          chain().setMark("textStyle", { fontSize }).run(),
+
       unsetFontSize:
         () =>
-        ({ chain }) => {
-          return chain().setMark("textStyle", { fontSize: null }).run();
-        },
+        ({ chain }: CommandProps) =>
+          chain()
+            .setMark("textStyle", { fontSize: null })
+            .removeEmptyTextStyle()
+            .run(),
     };
   },
 });
