@@ -1,5 +1,4 @@
 "use client";
-import React, { useState } from "react";
 import { Editor } from "@tiptap/react";
 import {
   Bold,
@@ -12,18 +11,7 @@ import {
 
 import { ToggleGroup, Toolbar } from "@/components/toolbar";
 
-import { Slider } from "@/components/ui/slider";
-
-import { Toggle } from "@/components/ui/toggle";
-import { FormatType } from "./format-type";
-import { ColorPicker } from "../color-picker";
 import { Button } from "@/components/ui/button";
-import {
-  TooltipProvider,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@/components/ui/tooltip";
 import {
   Drawer,
   DrawerClose,
@@ -34,7 +22,14 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Input } from "../ui/input";
+import { Toggle } from "@/components/ui/toggle";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ColorPicker } from "../color-picker";
 import FontsizeDropdown from "./fontsize-dropdown";
 
 interface EditorToolbarProps {
