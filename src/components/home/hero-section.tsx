@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { DiscordIcon } from "../icons/discord";
 import { Separator } from "../ui/separator";
+import { Ampersand } from "lucide-react";
 
 export function HeroSection() {
   return (
@@ -26,10 +27,14 @@ export function HeroSection() {
           <h1 className="my-4 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
             Stylish & Colorful Mails
           </h1>
-          <h3 className="text-lg font-bold tracking-tighter sm:text-xl md:text-2xl lg:text-4xl">
-            <small className="text-gray-500 text-md">for</small>
-            <br />
-            Rise of Kingdoms & Call of Dragons
+          <h3 className="text-gray-500 text-md flex items-center justify-center gap-2">
+            <span className="text-black text-lg font-bold tracking-tighter sm:text-xl md:text-2xl lg:text-4xl border-2 border-gray-900 rounded px-2 py-1 hover:bg-gray-900 hover:text-white transition-colors cursor-pointer">
+              Rise of Kingdoms
+            </span>
+            <Ampersand className="w-6 h-6" />
+            <span className="text-black text-lg font-bold tracking-tighter sm:text-xl md:text-2xl lg:text-4xl border-2 border-gray-900 rounded px-2 py-1 hover:bg-gray-900 hover:text-white transition-colors cursor-pointer">
+              Call of Dragons
+            </span>
           </h3>
           <Separator className="my-4" />
           <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
@@ -42,13 +47,13 @@ export function HeroSection() {
 
         <div className="space-x-4 flex flex-col md:flex-row">
           <Link
-            className="inline-flex h-16 items-center justify-center rounded-md bg-gray-900 px-8 py-4 text-lg font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+            className="inline-flex h-14 items-center justify-center rounded-md bg-gray-900 px-8 py-2 text-lg font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
             href={PAGES.CREATE_TEMPLATE}
           >
             Write a Mail
           </Link>
           <Link
-            className="inline-flex h-16 items-center justify-center rounded-md bg-white border-2 border-gray-900 px-8 py-4 text-lg font-medium text-gray-900 hover:text-white shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+            className="inline-flex h-14 items-center justify-center rounded-md bg-white border-2 border-gray-900 px-8 py-2 text-lg font-medium text-gray-900 hover:text-white shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
             href={PAGES.CREATE_TEMPLATE}
           >
             Public Templates
