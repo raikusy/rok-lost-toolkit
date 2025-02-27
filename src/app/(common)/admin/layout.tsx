@@ -13,7 +13,7 @@ const adminLinks = [
   },
   {
     href: "/fancy-texts",
-    label: "Fancy Texts",
+    label: "Mail Templates",
   },
 ];
 

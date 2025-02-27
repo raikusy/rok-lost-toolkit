@@ -92,7 +92,7 @@ export const INITIAL_CONTENT: JSONContent = {
         },
         {
           type: "text",
-          text: " text in alliance mail for your next Alliance Event update or Kingdom Announcement or War strategy changes.Now you can send fancy colorful creative mails to your Kingdom and standout from the crowd!",
+          text: " text in alliance mail for your next Alliance Event update or Kingdom Announcement or War strategy changes.Now you can send stylish and colorful creative mails to your Kingdom and standout from the crowd!",
         },
       ],
     },

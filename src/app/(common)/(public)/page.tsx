@@ -1,6 +1,9 @@
 import Pages from "@/components/client/pages";
 import SearchBox from "@/components/client/search";
 import { TiptapPreview } from "@/components/client/tiptap-preview";
+import { HeroSection } from "@/components/home/hero-section";
+import { SponsorSection } from "@/components/home/sponsor-section";
+import { TemplateCard } from "@/components/template-card";
 import { PAGES } from "@/config/pages";
 import { getPublicFancyTexts } from "@/server/actions/fancy-text.action";
 import { format } from "date-fns";
@@ -20,136 +23,10 @@ export default async function Home({
   const templates = await getPublicFancyTexts({ page, search });
   return (
     <>
-      <section className="w-full h-full flex flex-1 items-center justify-center">
-        <div className="flex flex-col items-center space-y-4 text-center">
-          <Link className="flex items-center justify-center" href="/">
-            <Image
-              src="/logo_rok.png"
-              width={384}
-              height={173}
-              alt="Fancy Mail Text - Rise of Kingdom & Call of Dragons"
-            />
-            {/* <Logo className="h-48 w-48" /> */}
-            <span className="sr-only">
-              Fancy Mail Text - Rise of Kingdoms & Call of Dragons
-            </span>
-          </Link>
-          <div className="space-y-2">
-            <h1 className="my-4 text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-              Fancy Mail Text
-            </h1>
-            <h3 className="text-lg font-bold tracking-tighter sm:text-xl md:text-2xl lg:text-4xl">
-              Rise of Kingdoms & Call of Dragons
-            </h3>
-            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-              Create beautiful Rise of Kingdoms & Call of Dragons mail for event
-              guides, KVK strategies, alliance and kingdom updates, MGE
-              announcements with ease. Create stylish Alliance Descriptions.
-              Browse hundreds of public mail templates created by other players.
-            </p>
-          </div>
+      <HeroSection />
 
-          <div className="space-x-4">
-            <Link
-              className="inline-flex h-16 items-center justify-center rounded-md bg-gray-900 px-8 py-4 text-lg font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-              href={PAGES.CREATE_TEMPLATE}
-            >
-              Create Fancy Mail
-            </Link>
-          </div>
-        </div>
-      </section>
+      <SponsorSection />
 
-      <section className="w-full py-12" id="#public">
-        <div className="container space-y-8 px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-2xl dark:bg-gray-800 mb-8">
-                Public Mail Templates
-              </div>
-              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                Explore Hundreds of Public Mail Templates created by other
-                players
-              </p>
-            </div>
-          </div>
-          <div className="flex justify-center">
-            <SearchBox />
-          </div>
-          {templates?.data?.length ? (
-            <>
-              <div className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:grid-cols-3">
-                {templates?.data?.map((template) => (
-                  <Link
-                    href={PAGES.VIEW_TEMPLATE(template.id)}
-                    key={template.id}
-                    className="group block transition-all hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-lg"
-                  >
-                    <div className="flex flex-col h-full bg-[#F1E3C3] rounded-lg shadow-md dark:bg-gray-800 overflow-hidden">
-                      <div className="p-4 pb-2">
-                        <h2 className="text-lg font-semibold line-clamp-1">
-                          {template.name}
-                        </h2>
-                      </div>
-                      <div className="flex-1">
-                        <TiptapPreview
-                          content={template.content}
-                          className="bg-[#F1E3C3] dark:bg-gray-800"
-                        />
-                      </div>
-                      <div className="p-4 pt-2 text-sm text-gray-600 dark:text-gray-300 border-t border-gray-200 dark:border-gray-700">
-                        <div className="flex items-center justify-between">
-                          <p>{format(template.createdAt, "dd MMM, yyyy")}</p>
-                          <p>Governor: {template.user.name}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-              <Pages total={templates?.total} />
-            </>
-          ) : (
-            <div className="flex items-center justify-center">
-              <p className="text-lg text-gray-500 dark:text-gray-400">
-                No public mail templates found
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section className="w-full py-12" id="features">
-        <div className="container space-y-8 px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-2xl dark:bg-gray-800 mb-8">
-                Sponsors
-              </div>
-              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                No Sponsors :(
-              </p>
-            </div>
-          </div>
-          <div className="space-x-4 flex justify-center">
-            <a
-              className="inline-flex h-12 items-center justify-center rounded-md bg-gray-900 px-6 py-4 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-              href="https://patreon.com/raikusy"
-            >
-              Sponsor Me on Patreon
-            </a>
-            <a href="https://buymeacoffee.com/raiku" target="_blank">
-              <Image
-                width={180}
-                height={60}
-                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                alt="Buy Me A Coffee"
-                className="h-12"
-              />
-            </a>
-          </div>
-        </div>
-      </section>
       {/* <section className="w-full py-12 md:py-24 lg:py-32" id="features">
         <div className="container space-y-12 px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">

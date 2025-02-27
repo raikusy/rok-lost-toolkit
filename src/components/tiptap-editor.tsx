@@ -74,7 +74,7 @@ const Editor = ({
     toast.promise(promise, {
       loading: "Loading...",
       success: (_data) => {
-        return `Fancy Text Copied!`;
+        return `Mail Copied!`;
       },
       error: "Error",
     });

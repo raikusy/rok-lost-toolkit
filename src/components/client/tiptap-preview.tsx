@@ -23,6 +23,7 @@ export const TiptapPreview = ({
   const [isGenerating, setIsGenerating] = useState(true);
 
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, TextStyle, Color, FontSize],
     content,
     editable: false,
