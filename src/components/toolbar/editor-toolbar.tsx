@@ -30,7 +30,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ColorPicker } from "../color-picker";
-import FontsizeDropdown from "./fontsize-dropdown";
+import FontSizeInput from "./fontsize-input";
 import ConvertCodeDialog from "./convert-code-dialog";
 
 interface EditorToolbarProps {
@@ -208,10 +208,7 @@ const EditorToolbar = ({
 
         {/* <FormatType editor={editor} /> */}
 
-        <FontsizeDropdown
-          fontSize={fontSize[0]}
-          setFontsize={onFontSizeChange}
-        />
+        <FontSizeInput fontSize={fontSize[0]} setFontSize={onFontSizeChange} />
 
         <ColorPicker background={textColor} setBackground={handleColorChange} />
       </ToggleGroup>
