@@ -23,6 +23,7 @@ import DeleteDialog from "./toolbar/delete-dialog";
 import DuplicateDialog from "./toolbar/duplicate-dialog";
 import { FontSize } from "@/lib/font-size";
 import { Confetti } from "./magicui/confetti";
+import { DiscordIcon } from "./icons/discord";
 
 interface EditorProps {
   mode: "create" | "edit" | "view";
@@ -108,6 +109,14 @@ const Editor = ({
         <Button onClick={router.back}>
           <CircleArrowLeft className="w-6 h-6 mr-2" /> Go back
         </Button>
+        <Link
+          className="btn-primary"
+          href="https://discord.gg/23FuzxykhN"
+          target="_blank"
+        >
+          <DiscordIcon className="w-6 h-6 mr-2 text-white" fill="white" />
+          Join Discord
+        </Link>
         <div className="inline-flex space-x-2">
           {mode === "create" &&
             (user ? (
