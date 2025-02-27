@@ -127,6 +127,9 @@ export const getPublicFancyTexts = cacheData(
 export const getAllFancyTexts = async (params: {
   page?: number;
   search?: string;
+  limit?: number;
+  public?: boolean;
+  deleted?: boolean;
 }) => {
   const { user } = await getCurrentUserSession();
   if (!user || user.role !== ROLES.ADMIN) {

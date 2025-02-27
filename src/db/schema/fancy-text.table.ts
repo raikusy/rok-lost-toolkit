@@ -32,7 +32,9 @@ export const fancyTextTable = pgTable(
     updatedAt: timestamp("updated_at", {
       withTimezone: true,
       mode: "date",
-    }).$onUpdate(() => new Date()),
+    })
+      .defaultNow()
+      .$onUpdate(() => new Date()),
     deletedAt: timestamp("deleted_at", {
       withTimezone: true,
       mode: "date",

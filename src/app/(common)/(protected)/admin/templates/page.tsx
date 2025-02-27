@@ -1,6 +1,10 @@
-"use client";
-
-import { getAllFancyTexts } from "@/server/actions/fancy-text.action";
+import { ClearFilters } from "@/components/admin/clear-filters";
+import { DeletedFilter } from "@/components/admin/deleted-filter";
+import { PublicFilter } from "@/components/admin/public-filter";
+import Pages from "@/components/client/pages";
+import { PreviewModal } from "@/components/client/preview-modal";
+import SearchBox from "@/components/client/search";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,52 +13,56 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { format } from "date-fns";
-import Link from "next/link";
 import { PAGES } from "@/config/pages";
-import SearchBox from "@/components/client/search";
-import Pages from "@/components/client/pages";
-import { Button } from "@/components/ui/button";
-import { Eye, ExternalLink } from "lucide-react";
-import { PreviewModal } from "@/components/client/preview-modal";
-import { useEffect, useState } from "react";
-import { FancyText } from "@/db/schema";
-import { useSearchParams } from "next/navigation";
+import { getAllFancyTexts } from "@/server/actions/fancy-text.action";
+import { format } from "date-fns";
+import dayjs from "dayjs";
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
 
-interface TemplateData {
-  data: FancyText[];
-  total: number;
-  page: number;
-  limit: number;
-}
-
-export default function FancyTextsPage() {
-  const searchParams = useSearchParams();
-  const [selectedTemplate, setSelectedTemplate] = useState<FancyText | null>(
-    null
-  );
-  const [templates, setTemplates] = useState<TemplateData | null>(null);
-  const page = Number(searchParams.get("page")) || 1;
-  const search = searchParams.get("search") || undefined;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getAllFancyTexts({ page, search });
-        setTemplates(data);
-      } catch (error) {
-        console.error("Error fetching templates:", error);
-      }
-    };
-    fetchData();
-  }, [page, search]);
+export default async function FancyTextsPage({
+  searchParams,
+}: {
+  searchParams: {
+    page?: string;
+    search?: string;
+    limit?: string;
+    public?: string;
+    deleted?: string;
+  };
+}) {
+  const page = Number(searchParams.page) || 1;
+  const search = searchParams.search || undefined;
+  const limit = Number(searchParams.limit) || 10;
+  const isPublic =
+    searchParams.public !== undefined
+      ? searchParams.public === "true"
+      : undefined;
+  const isDeleted =
+    searchParams.deleted !== undefined
+      ? searchParams.deleted === "true"
+      : undefined;
+  const templates = await getAllFancyTexts({
+    page,
+    search,
+    limit,
+    public: isPublic,
+    deleted: isDeleted,
+  });
 
   return (
     <>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Fancy Texts</h2>
+          <h2 className="text-2xl font-bold">
+            Templates {templates?.total ? `(${templates?.total})` : ""}
+          </h2>
           <div className="flex items-center space-x-4">
+            {isPublic !== undefined || isDeleted !== undefined ? (
+              <ClearFilters />
+            ) : null}
+            <PublicFilter />
+            <DeletedFilter />
             <SearchBox />
           </div>
         </div>
@@ -76,7 +84,7 @@ export default function FancyTextsPage() {
                   <TableCell className="font-medium">{template.name}</TableCell>
                   <TableCell>{template.user.name}</TableCell>
                   <TableCell>
-                    {format(new Date(template.createdAt), "dd MMM yyyy, HH:mm")}
+                    {dayjs(template.createdAt).format("DD MMM YYYY, h:mm A")}
                   </TableCell>
                   <TableCell>
                     <span
@@ -91,14 +99,10 @@ export default function FancyTextsPage() {
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setSelectedTemplate(template)}
-                      >
-                        <Eye className="h-4 w-4" />
-                        <span className="sr-only">Preview</span>
-                      </Button>
+                      <PreviewModal
+                        content={template.content}
+                        name={template.name}
+                      />
                       <Link href={PAGES.VIEW_TEMPLATE(template.id)}>
                         <Button variant="ghost" size="sm">
                           <ExternalLink className="h-4 w-4" />
@@ -115,15 +119,6 @@ export default function FancyTextsPage() {
 
         <Pages total={templates?.total ?? 0} />
       </div>
-
-      {selectedTemplate && (
-        <PreviewModal
-          isOpen={true}
-          onClose={() => setSelectedTemplate(null)}
-          content={selectedTemplate.content}
-          name={selectedTemplate.name}
-        />
-      )}
     </>
   );
 }

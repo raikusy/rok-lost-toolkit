@@ -7,4 +7,6 @@ export const PAGES = {
   EDIT_TEMPLATE: (id: string) => `/edit-template/${id}`,
   VIEW_TEMPLATE: (id: string) => `/view-template/${id}`,
   PUBLIC_TEMPLATES: "/public-templates",
+  ADMIN_ALL_TEMPLATES: "/admin/templates",
+  ADMIN_USERS: "/admin/users",
 };

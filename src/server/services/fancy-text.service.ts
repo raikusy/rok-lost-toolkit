@@ -3,7 +3,16 @@ import "server-only";
 import { db } from "@/db/drizzle";
 import { fancyTextTable } from "@/db/schema";
 import { JSONContent } from "@tiptap/react";
-import { and, countDistinct, desc, eq, isNull, sql, ilike } from "drizzle-orm";
+import {
+  and,
+  countDistinct,
+  desc,
+  eq,
+  isNull,
+  sql,
+  ilike,
+  isNotNull,
+} from "drizzle-orm";
 
 export interface FancyText {
   name: string;
@@ -150,16 +159,29 @@ export const FancyTextService = {
     };
   },
 
-  getAllFancyTexts: async (params: { page?: number; search?: string }) => {
+  getAllFancyTexts: async (params: {
+    page?: number;
+    search?: string;
+    limit?: number;
+    public?: boolean;
+    deleted?: boolean;
+  }) => {
     const page = params.page || 1;
-    const limit = 12;
+    const limit = params.limit || 12;
     const offset = (page - 1) * limit;
 
+    const deletedCondition = params.deleted
+      ? isNotNull(fancyTextTable.deletedAt)
+      : isNull(fancyTextTable.deletedAt);
+
     const where = and(
-      isNull(fancyTextTable.deletedAt),
       params.search
         ? sql`to_tsvector('english', ${fancyTextTable.name}) @@ plainto_tsquery('english', ${params.search})`
-        : undefined
+        : undefined,
+      params.public !== undefined
+        ? eq(fancyTextTable.isPublic, params.public)
+        : undefined,
+      params.deleted !== undefined ? deletedCondition : undefined
     );
 
     const count = await db.$count(fancyTextTable, where);

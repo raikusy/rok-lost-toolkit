@@ -1,10 +1,8 @@
-import { getCurrentUserSession } from "@/server/actions/auth.action";
 import { ROLES } from "@/config/roles";
-import { redirect } from "next/navigation";
-import { PAGES } from "@/config/pages";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { getCurrentUserSession } from "@/server/actions/auth.action";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 const adminLinks = [
   {
@@ -12,7 +10,7 @@ const adminLinks = [
     label: "Users",
   },
   {
-    href: "/fancy-texts",
+    href: "/templates",
     label: "Mail Templates",
   },
 ];
@@ -25,7 +23,7 @@ export default async function AdminLayout({
   const { user } = await getCurrentUserSession();
 
   if (!user || user.role !== ROLES.ADMIN) {
-    redirect(PAGES.HOME);
+    return notFound();
   }
 
   return (

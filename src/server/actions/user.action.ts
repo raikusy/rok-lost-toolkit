@@ -4,6 +4,8 @@ import { cacheData } from "../../lib/cache-data";
 import { KEY_CACHE } from "@/config/key-cache";
 import { applyValidation } from "@/lib/validation";
 import { UserCreateInput, UserCreateSchema } from "../validations/user.schema";
+import { getCurrentUserSession } from "./auth.action";
+import { ROLES } from "@/config/roles";
 
 export const createUser = async (input: UserCreateInput) => {
   const data = applyValidation(UserCreateSchema, input);
@@ -12,6 +14,14 @@ export const createUser = async (input: UserCreateInput) => {
   return user;
 };
 
-export const getAllUsers = async () => {
-  return cacheData(UserService.getAllUsers, [KEY_CACHE.USERS.GET_ALL])();
+export const getAllUsers = async (params: {
+  page?: number;
+  search?: string;
+  limit?: number;
+}) => {
+  const { user } = await getCurrentUserSession();
+  if (!user || user.role !== ROLES.ADMIN) {
+    throw new Error("Unauthorized");
+  }
+  return cacheData(UserService.getAllUsers, [KEY_CACHE.USERS.GET_ALL])(params);
 };
