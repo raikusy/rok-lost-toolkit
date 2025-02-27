@@ -54,7 +54,7 @@ export function HeroSection() {
           </Link>
           <Link
             className="inline-flex h-14 items-center justify-center rounded-md bg-white border-2 border-gray-900 px-8 py-2 text-lg font-medium text-gray-900 hover:text-white shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-            href={PAGES.CREATE_TEMPLATE}
+            href={PAGES.PUBLIC_TEMPLATES}
           >
             Public Templates
           </Link>
