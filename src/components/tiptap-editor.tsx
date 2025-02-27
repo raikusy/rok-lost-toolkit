@@ -45,6 +45,7 @@ const Editor = ({
   const [fontSize, setFontSize] = useState([12]);
   const router = useRouter();
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, TextStyle, Color, FontSize],
     content: content,
     editorProps: {

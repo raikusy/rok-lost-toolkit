@@ -57,12 +57,15 @@ export const TiptapPreview = ({
 
   if (screenshot) {
     return (
-      <div className={`relative w-full h-[200px] overflow-hidden ${className}`}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+      <div
+        className={`relative px-4 w-full h-[200px] overflow-hidden ${className}`}
+      >
+        <Image
           src={screenshot}
           alt="Template Preview"
-          className="object-contain w-full h-full"
+          className="object-cover w-full"
+          width={600}
+          height={200}
         />
         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#F1E3C3] dark:from-gray-800 to-transparent" />
       </div>
