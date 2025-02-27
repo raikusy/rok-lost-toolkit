@@ -173,6 +173,22 @@ const Editor = ({
           id="rok-editor"
           className="editor flex min-h-[300px] w-full bg-[#F1E3C3]"
         >
+          <style jsx global>{`
+            /* Ensure bold text with color displays correctly */
+            .ProseMirror strong[style*="color"] {
+              color: inherit !important;
+            }
+            .ProseMirror [style*="color"] strong {
+              color: inherit !important;
+            }
+            /* Fix for nested formatting */
+            .ProseMirror [data-type="textStyle"] {
+              color: var(--text-color, inherit);
+            }
+            .ProseMirror [data-type="textStyle"][style*="color"] {
+              --text-color: attr(style);
+            }
+          `}</style>
           <EditorContent
             className="flex flex-1 flex-col w-full max-w-full"
             editor={editor}

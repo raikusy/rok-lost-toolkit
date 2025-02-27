@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/tooltip";
 import { ColorPicker } from "../color-picker";
 import FontsizeDropdown from "./fontsize-dropdown";
+import ConvertCodeDialog from "./convert-code-dialog";
 
 interface EditorToolbarProps {
   editor: Editor;
@@ -53,12 +54,45 @@ const EditorToolbar = ({
 }: EditorToolbarProps) => {
   const handleColorChange = (color: string) => {
     setTextColor(color);
+
+    // First store if the current selection has bold formatting
+    const hasBold = editor.isActive("bold");
+
+    // Apply color
     editor.chain().focus().setColor(color).run();
+
+    // If it had bold formatting, reapply it
+    if (hasBold) {
+      editor.chain().focus().toggleBold().run();
+      editor.chain().focus().toggleBold().run();
+    }
   };
 
   const onFontSizeChange = (v: number[]) => {
     setFontSize(v);
-    editor.chain().focus().setFontSize(`${fontSize[0]}px`).run();
+
+    // Store current formatting
+    const currentColor = editor.getAttributes("textStyle").color;
+    const hasBold = editor.isActive("bold");
+    const hasItalic = editor.isActive("italic");
+
+    // Apply font size
+    editor.chain().focus().setFontSize(`${v[0]}px`).run();
+
+    // Reapply formatting if needed
+    if (currentColor) {
+      editor.chain().focus().setColor(currentColor).run();
+    }
+
+    // Ensure bold stays applied if it was active
+    if (hasBold && !editor.isActive("bold")) {
+      editor.chain().focus().toggleBold().run();
+    }
+
+    // Ensure italic stays applied if it was active
+    if (hasItalic && !editor.isActive("italic")) {
+      editor.chain().focus().toggleItalic().run();
+    }
   };
 
   return (
@@ -73,7 +107,18 @@ const EditorToolbar = ({
         <Toggle
           size="icon"
           tooltip="Bold"
-          onPressedChange={() => editor.chain().focus().toggleBold().run()}
+          onPressedChange={() => {
+            // Store current color
+            const currentColor = editor.getAttributes("textStyle").color;
+
+            // Toggle bold
+            editor.chain().focus().toggleBold().run();
+
+            // Reapply color if it exists
+            if (currentColor) {
+              editor.chain().focus().setColor(currentColor).run();
+            }
+          }}
           disabled={!editor.can().chain().focus().toggleBold().run()}
           pressed={editor.isActive("bold")}
         >
@@ -83,7 +128,24 @@ const EditorToolbar = ({
         <Toggle
           size="icon"
           tooltip="Italic"
-          onPressedChange={() => editor.chain().focus().toggleItalic().run()}
+          onPressedChange={() => {
+            // Store current formatting
+            const currentColor = editor.getAttributes("textStyle").color;
+            const hasBold = editor.isActive("bold");
+
+            // Toggle italic
+            editor.chain().focus().toggleItalic().run();
+
+            // Reapply formatting if needed
+            if (currentColor) {
+              editor.chain().focus().setColor(currentColor).run();
+            }
+
+            // Ensure bold stays applied if it was active
+            if (hasBold && !editor.isActive("bold")) {
+              editor.chain().focus().toggleBold().run();
+            }
+          }}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
           pressed={editor.isActive("italic")}
           value="italic"
@@ -158,6 +220,8 @@ const EditorToolbar = ({
         <Button variant="outline" size="sm" onClick={handleCopy}>
           Click to copy
         </Button>
+
+        <ConvertCodeDialog editor={editor} />
 
         <Drawer>
           <DrawerTrigger className="mt-0 h-9 rounded-md px-3 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90">
